@@ -14,16 +14,16 @@ internal class TaskTableCell: UITableViewCell {
     @IBOutlet internal var taskTitle: UILabel!
     @IBOutlet internal var taskIcon: UIImageView!
     
-//    internal var viewModel: TaskViewModel? {
-//        didSet {
-//            guard let model = viewModel else {
-//                displayDefaultState()
-//                return
-//            }
-//
-//            updateView(with: model)
-//        }
-//    }
+    internal var viewModel: TaskViewModel? {
+        didSet {
+            guard let model = viewModel else {
+                displayDefaultState()
+                return
+            }
+
+            updateView(with: model)
+        }
+    }
     
     private func updateView(with model: TaskViewModel) {
         

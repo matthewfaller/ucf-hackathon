@@ -9,15 +9,8 @@
 import Foundation
 import UIKit
 
-internal class TaskTableModel: NSObject {
+internal class TaskTableModel {
  
-    init(with tableView: UITableView) {
-        self.tableView = tableView
-    }
     
-    private weak var tableView: UITableView?
 }
 
-//extension TaskDataSource: UITableViewDataSource {
-//    
-//}
