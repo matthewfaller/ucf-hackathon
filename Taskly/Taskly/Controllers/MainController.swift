@@ -13,7 +13,7 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     @IBOutlet private var tableView: UITableView!
     
-    private var service: TaskService = RestfulTaskService()
+    private var service: TaskService = MockTaskService()
     private lazy var tableModel = TaskTableModel(service: service)
     private lazy var tableRefreshControl: UIRefreshControl = {
         let control = UIRefreshControl()
