@@ -32,6 +32,8 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction private func beginRefresh() {
         loadingView.isHidden = false
         
+        // This violates seperation of concerns
+        
         Alamofire.request("https://jsonplaceholder.typicode.com/todos").validate().responseData { (response) in
             
             self.endRefresh()

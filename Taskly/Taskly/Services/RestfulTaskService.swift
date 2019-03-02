@@ -24,7 +24,6 @@ class RestfulTaskService: TaskService {
                 
             case .failure:
                 completion(.failure(error: TaskError()))
-                
             }
         }
     }
