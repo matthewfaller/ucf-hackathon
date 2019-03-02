@@ -4,6 +4,8 @@
 
 ## Build generated
 build/
+pods/
+Podfile.lock
 DerivedData/
 
 ## Various settings
