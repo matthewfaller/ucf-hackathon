@@ -32,31 +32,15 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBAction private func beginRefresh() {
         loadingView.isHidden = false
         
-        Alamofire.request("https://jsonplaceholder.typicode.com/todos").validate().responseJSON { (response) in
+        Alamofire.request("https://jsonplaceholder.typicode.com/todos").validate().responseData { (response) in
             
             self.endRefresh()
             
             switch response.result {
+                
             case .success(let data):
-                if let jsonArray = data as? [[String: Any]] {
-                    
-                    var result: [TaskModel] = []
-                    
-                    jsonArray.forEach { (jsonObject) in
-                        
-                        guard
-                            let userId = jsonObject["userId"] as? Int,
-                            let id = jsonObject["id"] as? Int,
-                            let title = jsonObject["title"] as? String,
-                            let completed = jsonObject["completed"] as? Bool
-                            else {
-                                return
-                        }
-                        
-                        let newModel = TaskModel(userId: userId, id: id, title: title, completed: completed)
-                        
-                        result.append(newModel)
-                    }
+                
+                if let result = try? JSONDecoder().decode([TaskModel].self, from: data) {
                     
                     self.sortResponse(tasks: result)
                 }

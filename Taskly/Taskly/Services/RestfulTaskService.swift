@@ -22,7 +22,7 @@ class RestfulTaskService: TaskService {
                 completion(.success(model: result))
                 
                 
-            case .failure(let error):
+            case .failure:
                 completion(.failure(error: TaskError()))
                 
             }
