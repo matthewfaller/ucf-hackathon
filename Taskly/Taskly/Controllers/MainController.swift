@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class MainController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -25,15 +26,35 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        service.getTasks { (result) in
+        Alamofire.request("https://jsonplaceholder.typicode.com/todos").validate().responseJSON { (response) in
             
-            switch result {
+            switch response.result {
+            case .success(let data):
+                if let jsonArray = data as? [[String: Any]] {
+                    
+                    var result: [TaskModel] = []
+                    
+                    jsonArray.forEach { (jsonObject) in
+                        
+                        guard
+                            let userId = jsonObject["userId"] as? Int,
+                            let id = jsonObject["id"] as? Int,
+                            let title = jsonObject["title"] as? String,
+                            let completed = jsonObject["completed"] as? Bool
+                        else {
+                            return
+                        }
+                        
+                        let newModel = TaskModel(userId: userId, id: id, title: title, completed: completed)
+                        
+                        result.append(newModel)
+                    }
+                    
+                    self.sortResponse(tasks: result)
+                }
                 
-            case let .success(networkModels):
-                self.sortResponse(tasks: networkModels)
-            
-            case let .failure(error):
-                self.displayError(error)
+            case .failure:
+                self.displayError(TaskError())
             }
         }
     }
