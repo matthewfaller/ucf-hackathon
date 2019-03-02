@@ -33,6 +33,7 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
         loadingView.isHidden = false
         
         service.getTasks { (serviceResult) in
+            self.endRefresh()
             
             switch serviceResult {
                 
