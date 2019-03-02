@@ -115,29 +115,58 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4B-WE-ksv">
+                                        <rect key="frame" x="298" y="58" width="56" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" title="Refresh">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="beginRefresh" destination="BYZ-38-t0r" eventType="touchUpInside" id="qab-SE-YMj"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="bex-Zx-hRd" secondAttribute="bottom" constant="8" id="PLi-S7-mDb"/>
+                                    <constraint firstAttribute="bottom" secondItem="n4B-WE-ksv" secondAttribute="bottom" constant="10" id="bzc-f8-zbM"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bex-Zx-hRd" secondAttribute="trailing" id="cS4-vM-neM"/>
                                     <constraint firstAttribute="height" constant="100" id="cdI-bj-TBI"/>
                                     <constraint firstItem="bex-Zx-hRd" firstAttribute="leading" secondItem="tLe-eC-w9X" secondAttribute="leading" constant="20" id="nXE-5W-F4u"/>
+                                    <constraint firstAttribute="trailing" secondItem="n4B-WE-ksv" secondAttribute="trailing" constant="21" id="xqC-J1-kDw"/>
+                                </constraints>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="578-Ka-ReV" userLabel="UglyLoadingView">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="YHS-PD-XWf">
+                                        <rect key="frame" x="169" y="315" width="37" height="37"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="0.89752782534246578" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="YHS-PD-XWf" firstAttribute="centerX" secondItem="578-Ka-ReV" secondAttribute="centerX" id="ilM-im-cCU"/>
+                                    <constraint firstItem="YHS-PD-XWf" firstAttribute="centerY" secondItem="578-Ka-ReV" secondAttribute="centerY" id="ko4-pm-uHN"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="578-Ka-ReV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1XM-Zg-aay"/>
                             <constraint firstAttribute="trailing" secondItem="4jM-aO-xr2" secondAttribute="trailing" id="30Q-QU-cxd"/>
                             <constraint firstAttribute="bottom" secondItem="4jM-aO-xr2" secondAttribute="bottom" id="9BF-nQ-FUP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="578-Ka-ReV" secondAttribute="trailing" id="BHS-Gs-Hh4"/>
                             <constraint firstAttribute="trailing" secondItem="tLe-eC-w9X" secondAttribute="trailing" id="DTd-Gu-IYj"/>
+                            <constraint firstAttribute="bottom" secondItem="578-Ka-ReV" secondAttribute="bottom" id="Jjy-aE-NrE"/>
                             <constraint firstItem="tLe-eC-w9X" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="LTn-T1-jZP"/>
                             <constraint firstItem="4jM-aO-xr2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Xy0-oR-Rhm"/>
                             <constraint firstItem="tLe-eC-w9X" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="kew-Hw-Mpa"/>
+                            <constraint firstItem="578-Ka-ReV" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="knt-dm-pmF"/>
                             <constraint firstItem="4jM-aO-xr2" firstAttribute="top" secondItem="tLe-eC-w9X" secondAttribute="bottom" id="yt9-eu-uIa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="color" keyPath="startColor">
-                                <color key="value" red="0.17254901959999999" green="0.78039215689999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="value" red="0.16782964511012688" green="0.57270038826000869" blue="0.792948921319797" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="color" keyPath="endColor">
                                 <color key="value" red="0.070588235294117646" green="0.13333333333333333" blue="0.37254901960784315" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -146,6 +175,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
+                        <outlet property="loadingView" destination="578-Ka-ReV" id="VOR-Ar-ieS"/>
                         <outlet property="tableView" destination="4jM-aO-xr2" id="rBk-T1-YHh"/>
                     </connections>
                 </viewController>
