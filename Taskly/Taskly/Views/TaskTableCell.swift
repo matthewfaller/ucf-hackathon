@@ -27,10 +27,13 @@ internal class TaskTableCell: UITableViewCell {
     
     private func updateView(with model: TaskViewModel) {
         
+        taskTitle.text = model.title
+        taskIcon.tintColor = model.taskColor
     }
     
     private func displayDefaultState() {
-        
+        taskTitle.text = "--"
+        taskIcon.tintColor = .gray
     }
 }
 

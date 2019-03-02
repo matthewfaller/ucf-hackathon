@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 internal class TaskViewModel {
     
@@ -15,10 +16,35 @@ internal class TaskViewModel {
     }
     
     internal var isComplete: Bool {
-        return taskModel.completed
+        get {
+            return taskModel.completed
+        }
+        set {
+            taskModel.completed = true
+        }
     }
     
-    private let taskModel: TaskModel
+    internal var title: String {
+        return taskModel.title
+    }
+    
+    internal var id: Int {
+        return taskModel.id
+    }
+    
+    internal var taskColor: UIColor {
+        let color: UIColor
+        
+        if isComplete {
+            color = .green
+        } else {
+            color = UIColor.red.withAlphaComponent(0.75)
+        }
+        
+        return color
+    }
+    
+    private var taskModel: TaskModel
 }
 
 internal enum TaskSection: Int {

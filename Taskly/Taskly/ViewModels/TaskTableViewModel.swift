@@ -35,6 +35,7 @@ internal class TaskTableModel {
     }
     
     private func handleSuccess(_ models: [TaskModel]) {
+        let models = models.map(TaskViewModel.init)
         let incomeplete = models.filter(isIncomplete)
         let completed = models.filter(isCompleted)
         
@@ -47,18 +48,18 @@ internal class TaskTableModel {
         delegate?.didRecieveError(error)
     }
     
-    private func isIncomplete(_ model: TaskModel) -> Bool {
-        return !model.completed
+    private func isIncomplete(_ model: TaskViewModel) -> Bool {
+        return !model.isComplete
     }
     
-    private func isCompleted(_ model: TaskModel) -> Bool {
-        return model.completed
+    private func isCompleted(_ model: TaskViewModel) -> Bool {
+        return model.isComplete
     }
 }
 
 internal protocol TaskTableModelDelegate: class {
     
-    func didFinishFetchingTasks(incomplete: [TaskModel], completed: [TaskModel])
+    func didFinishFetchingTasks(incomplete: [TaskViewModel], completed: [TaskViewModel])
     
     func didRecieveError(_ taskError: TaskError)
 }

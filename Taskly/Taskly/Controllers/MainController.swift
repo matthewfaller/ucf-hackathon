@@ -17,8 +17,8 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     private var service: TaskService = RestfulTaskService()
     private lazy var tableModel = TaskTableModel(service: service)
     
-    private var incompleteTasks: [TaskModel] = []
-    private var finishedTasks: [TaskModel] = []
+    private var incompleteTasks: [TaskViewModel] = []
+    private var finishedTasks: [TaskViewModel] = []
     
     override func viewDidLoad() {
         tableView.dataSource = self
@@ -83,30 +83,19 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         updateCell(cell as? TaskTableCell, for: model)
-        
         return cell
     }
     
-    private func updateCell(_ taskCell: TaskTableCell?, for model: TaskModel) {
-        
-        let color: UIColor
-        
-        if model.completed {
-            color = .green
-        } else {
-            color = UIColor.red.withAlphaComponent(0.75)
-        }
-        
-        taskCell?.taskTitle.text = model.title
-        taskCell?.taskIcon.tintColor = color
+    private func updateCell(_ taskCell: TaskTableCell?, for model: TaskViewModel) {
+        taskCell?.viewModel = model
     }
     
-    private func model(for indexPath: IndexPath) -> TaskModel? {
+    private func model(for indexPath: IndexPath) -> TaskViewModel? {
         guard let sectionID = TaskSection(rawValue: indexPath.section) else {
             return nil
         }
         
-        let model: TaskModel
+        let model: TaskViewModel
         
         switch sectionID {
         case .incomplete:
@@ -120,7 +109,7 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // MARK Editing:
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        let isFinished = model(for: indexPath)?.completed ?? true
+        let isFinished = model(for: indexPath)?.isComplete ?? true
         return !isFinished
     }
     
@@ -137,8 +126,8 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     private func completeTask(at indexPath: IndexPath) {
         tableView.performBatchUpdates({
-            var model = self.incompleteTasks.remove(at: indexPath.row)
-            model.completed.toggle()
+            let model = self.incompleteTasks.remove(at: indexPath.row)
+            model.isComplete.toggle()
             self.finishedTasks.append(model)
             self.finishedTasks.sort { $0.id < $1.id }
             let index = self.finishedTasks.firstIndex { $0.id == model.id } ?? 1
@@ -161,7 +150,7 @@ extension MainController: TaskTableModelDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    func didFinishFetchingTasks(incomplete: [TaskModel], completed: [TaskModel]) {
+    func didFinishFetchingTasks(incomplete: [TaskViewModel], completed: [TaskViewModel]) {
         endRefresh()
         incompleteTasks = incomplete
         finishedTasks = completed
