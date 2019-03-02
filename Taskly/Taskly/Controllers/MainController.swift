@@ -42,7 +42,7 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 
                 if let result = try? JSONDecoder().decode([TaskModel].self, from: data) {
                     
-                    self.sortResponse(tasks: result)
+//                    self.sortResponse(tasks: result)
                 }
                 
             case .failure:
