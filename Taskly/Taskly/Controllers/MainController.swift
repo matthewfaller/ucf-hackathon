@@ -15,6 +15,7 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet private var loadingView: UIView!
     
     private var service: TaskService = RestfulTaskService()
+    private lazy var tableModel = TaskTableModel(service: service)
     
     private var incompleteTasks: [TaskModel] = []
     private var finishedTasks: [TaskModel] = []
@@ -22,6 +23,7 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         tableView.dataSource = self
         tableView.delegate = self
+        tableModel.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -31,20 +33,7 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction private func beginRefresh() {
         loadingView.isHidden = false
-        
-        service.getTasks { (serviceResult) in
-            self.endRefresh()
-            
-            switch serviceResult {
-                
-            case let .success(model):
-                self.sortResponse(tasks: model)
-                
-            case let .failure(error):
-                self.displayError(error)
-                
-            }
-        }
+        tableModel.requestUpdate()
     }
     
     @IBAction private func endRefresh() {
@@ -52,30 +41,6 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
             self.loadingView.isHidden = true
         }
-    }
-    
-    private func sortResponse(tasks: [TaskModel]) {
-        incompleteTasks.removeAll()
-        finishedTasks.removeAll()
-        
-        tasks.forEach { (task) in
-            
-            if task.completed {
-                finishedTasks.append(task)
-            } else {
-                incompleteTasks.append(task)
-            }
-        }
-        
-        tableView.reloadSections([0, 1], with: .fade)
-    }
-    
-    private func displayError(_ error: TaskError) {
-        let alert = UIAlertController(title: "A problem has occurred", message: "We're sorry, but we're having trouble connecting right now", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action) in
-            alert.dismiss(animated: true, completion: nil)
-        }))
-        present(alert, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -197,3 +162,22 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 }
 
+extension MainController: TaskTableModelDelegate {
+    
+    func didRecieveError(_ taskError: TaskError) {
+        endRefresh()
+        let alert = UIAlertController(title: "A problem has occurred", message: "We're sorry, but we're having trouble connecting right now", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func didFinishFetchingTasks(incomplete: [TaskModel], completed: [TaskModel]) {
+        endRefresh()
+        incompleteTasks = incomplete
+        finishedTasks = completed
+        
+        tableView.reloadSections([0, 1], with: .fade)
+    }
+}
