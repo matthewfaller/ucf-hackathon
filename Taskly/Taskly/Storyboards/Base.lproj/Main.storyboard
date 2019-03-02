@@ -135,32 +135,15 @@
                                     <constraint firstAttribute="trailing" secondItem="n4B-WE-ksv" secondAttribute="trailing" constant="21" id="xqC-J1-kDw"/>
                                 </constraints>
                             </view>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="578-Ka-ReV" userLabel="UglyLoadingView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="YHS-PD-XWf">
-                                        <rect key="frame" x="169" y="315" width="37" height="37"/>
-                                    </activityIndicatorView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="0.89752782534246578" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstItem="YHS-PD-XWf" firstAttribute="centerX" secondItem="578-Ka-ReV" secondAttribute="centerX" id="ilM-im-cCU"/>
-                                    <constraint firstItem="YHS-PD-XWf" firstAttribute="centerY" secondItem="578-Ka-ReV" secondAttribute="centerY" id="ko4-pm-uHN"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="578-Ka-ReV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="1XM-Zg-aay"/>
                             <constraint firstAttribute="trailing" secondItem="4jM-aO-xr2" secondAttribute="trailing" id="30Q-QU-cxd"/>
                             <constraint firstAttribute="bottom" secondItem="4jM-aO-xr2" secondAttribute="bottom" id="9BF-nQ-FUP"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="578-Ka-ReV" secondAttribute="trailing" id="BHS-Gs-Hh4"/>
                             <constraint firstAttribute="trailing" secondItem="tLe-eC-w9X" secondAttribute="trailing" id="DTd-Gu-IYj"/>
-                            <constraint firstAttribute="bottom" secondItem="578-Ka-ReV" secondAttribute="bottom" id="Jjy-aE-NrE"/>
                             <constraint firstItem="tLe-eC-w9X" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="LTn-T1-jZP"/>
                             <constraint firstItem="4jM-aO-xr2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Xy0-oR-Rhm"/>
                             <constraint firstItem="tLe-eC-w9X" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="kew-Hw-Mpa"/>
-                            <constraint firstItem="578-Ka-ReV" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="knt-dm-pmF"/>
                             <constraint firstItem="4jM-aO-xr2" firstAttribute="top" secondItem="tLe-eC-w9X" secondAttribute="bottom" id="yt9-eu-uIa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -175,7 +158,6 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <connections>
-                        <outlet property="loadingView" destination="578-Ka-ReV" id="VOR-Ar-ieS"/>
                         <outlet property="tableView" destination="4jM-aO-xr2" id="rBk-T1-YHh"/>
                     </connections>
                 </viewController>

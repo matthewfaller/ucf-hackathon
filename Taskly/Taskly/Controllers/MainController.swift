@@ -12,10 +12,15 @@ import Alamofire
 class MainController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet private var tableView: UITableView!
-    @IBOutlet private var loadingView: UIView!
     
     private var service: TaskService = RestfulTaskService()
     private lazy var tableModel = TaskTableModel(service: service)
+    private lazy var tableRefreshControl: UIRefreshControl = {
+        let control = UIRefreshControl()
+        control.tintColor = .black
+        control.addTarget(self, action: #selector(beginRefresh), for: .valueChanged)
+        return control
+    }()
     
     private var incompleteTasks: [TaskViewModel] = []
     private var finishedTasks: [TaskViewModel] = []
@@ -23,11 +28,13 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.refreshControl = tableRefreshControl
         tableModel.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        tableRefreshControl.beginRefreshing()
         beginRefresh()
     }
     
@@ -159,14 +166,13 @@ extension MainController: TaskTableModelDelegate {
     }
     
     @IBAction private func beginRefresh() {
-        loadingView.isHidden = false
         tableModel.requestUpdate()
     }
     
     @IBAction private func endRefresh() {
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
-            self.loadingView.isHidden = true
+            self.tableRefreshControl.endRefreshing()
         }
     }
 }
