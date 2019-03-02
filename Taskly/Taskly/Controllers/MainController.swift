@@ -12,6 +12,7 @@ import Alamofire
 class MainController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet private var tableView: UITableView!
+    @IBOutlet private var loadingView: UIView!
     
     private var service: TaskService = RestfulTaskService()
     
@@ -25,8 +26,15 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        beginRefresh()
+    }
+    
+    @IBAction private func beginRefresh() {
+        loadingView.isHidden = false
         
         Alamofire.request("https://jsonplaceholder.typicode.com/todos").validate().responseJSON { (response) in
+            
+            self.endRefresh()
             
             switch response.result {
             case .success(let data):
@@ -41,8 +49,8 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             let id = jsonObject["id"] as? Int,
                             let title = jsonObject["title"] as? String,
                             let completed = jsonObject["completed"] as? Bool
-                        else {
-                            return
+                            else {
+                                return
                         }
                         
                         let newModel = TaskModel(userId: userId, id: id, title: title, completed: completed)
@@ -56,6 +64,13 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
             case .failure:
                 self.displayError(TaskError())
             }
+        }
+    }
+    
+    @IBAction private func endRefresh() {
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+            self.loadingView.isHidden = true
         }
     }
     
