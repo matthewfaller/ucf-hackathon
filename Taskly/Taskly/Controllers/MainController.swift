@@ -31,18 +31,6 @@ class MainController: UIViewController, UITableViewDelegate, UITableViewDataSour
         beginRefresh()
     }
     
-    @IBAction private func beginRefresh() {
-        loadingView.isHidden = false
-        tableModel.requestUpdate()
-    }
-    
-    @IBAction private func endRefresh() {
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
-            self.loadingView.isHidden = true
-        }
-    }
-    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let sectionID = TaskSection(rawValue: section) else {
             return nil
@@ -179,5 +167,17 @@ extension MainController: TaskTableModelDelegate {
         finishedTasks = completed
         
         tableView.reloadSections([0, 1], with: .fade)
+    }
+    
+    @IBAction private func beginRefresh() {
+        loadingView.isHidden = false
+        tableModel.requestUpdate()
+    }
+    
+    @IBAction private func endRefresh() {
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+            self.loadingView.isHidden = true
+        }
     }
 }
