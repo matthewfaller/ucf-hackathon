@@ -115,24 +115,12 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4B-WE-ksv">
-                                        <rect key="frame" x="298" y="58" width="56" height="32"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <state key="normal" title="Refresh">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="beginRefresh" destination="BYZ-38-t0r" eventType="touchUpInside" id="qab-SE-YMj"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="bex-Zx-hRd" secondAttribute="bottom" constant="8" id="PLi-S7-mDb"/>
-                                    <constraint firstAttribute="bottom" secondItem="n4B-WE-ksv" secondAttribute="bottom" constant="10" id="bzc-f8-zbM"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bex-Zx-hRd" secondAttribute="trailing" id="cS4-vM-neM"/>
                                     <constraint firstAttribute="height" constant="100" id="cdI-bj-TBI"/>
                                     <constraint firstItem="bex-Zx-hRd" firstAttribute="leading" secondItem="tLe-eC-w9X" secondAttribute="leading" constant="20" id="nXE-5W-F4u"/>
-                                    <constraint firstAttribute="trailing" secondItem="n4B-WE-ksv" secondAttribute="trailing" constant="21" id="xqC-J1-kDw"/>
                                 </constraints>
                             </view>
                         </subviews>
